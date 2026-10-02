@@ -1058,7 +1058,9 @@
   },
   "species": {
     "externalLinks": {
-      "groupLabel": "További információ: {species}"
+      "groupLabel": "További információ: {species}",
+      "viewOn": "Megtekintés: {site}",
+      "viewSpeciesOn": "{species} megtekintése: {site}"
     },
     "rarity": {
       "title": "Faj ritkasága",

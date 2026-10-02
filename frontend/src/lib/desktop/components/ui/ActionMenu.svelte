@@ -2,7 +2,8 @@
   ActionMenu Component
 
   A dropdown menu component that provides action buttons for detection items.
-  Displays common actions like review, toggle species visibility, lock/unlock, and delete.
+  Displays common actions like review, toggle species visibility, lock/unlock, and delete,
+  and optionally links to the species on eBird and Wikipedia.
 
   Features:
   - Automatically positions menu to stay within viewport
@@ -29,12 +30,15 @@
     Download,
     CircleCheck,
     CircleX,
+    ExternalLink,
   } from '@lucide/svelte';
   import { dropdown } from '$lib/utils/transitions';
   import { portal } from '$lib/utils/portal';
   import { computeAnchorPosition, applyAnchorPosition } from '$lib/utils/anchorPosition';
   import { auth } from '$lib/stores/auth';
-  import { t } from '$lib/i18n';
+  import { getLocale, t } from '$lib/i18n';
+  import { getSpeciesExternalLinks } from '$lib/utils/speciesLinks';
+  import { getSpeciesLinkIcon } from '$lib/desktop/components/data/speciesLinkIcons';
 
   let canEdit = $derived(!$auth.security.enabled || $auth.security.accessAllowed);
 
@@ -60,6 +64,8 @@
     onDelete?: () => void;
     /** Callback fired when user downloads the detection audio */
     onDownload?: () => void;
+    /** Show links to the detection's species on eBird and Wikipedia */
+    showSpeciesLinks?: boolean;
     /** Additional CSS classes to apply to the component */
     className?: string;
     /** Visual variant - `default` for in-row use, `overlay` for spectrogram overlay */
@@ -80,12 +86,28 @@
     onToggleLock,
     onDelete,
     onDownload,
+    showSpeciesLinks = false,
     className = '',
     variant = 'default',
     onMenuOpen,
     onMenuClose,
     ...rest
   }: Props = $props();
+
+  // External links need no edit rights, so they also keep the menu available
+  // to read-only visitors.
+  const speciesLinks = $derived(
+    showSpeciesLinks
+      ? getSpeciesExternalLinks(detection.scientificName, detection.speciesCode, getLocale())
+      : []
+  );
+
+  // Whether menu items render above the species links and need a separator
+  // before them. The quick-review (mark correct / false positive) block is left
+  // out because it already ends with its own separator.
+  const hasItemsAboveLinks = $derived(
+    Boolean(onDownload) || (canEdit && Boolean(onReview || onToggleSpecies || onToggleLock))
+  );
 
   let isOpen = $state(false);
   // svelte-ignore non_reactive_update
@@ -203,7 +225,7 @@
   });
 </script>
 
-{#if canEdit || onDownload}
+{#if canEdit || onDownload || speciesLinks.length > 0}
   <div {...rest} class={cn('relative', className)}>
     <button
       bind:this={buttonElement}
@@ -384,6 +406,35 @@
               </div>
             </button>
           </li>
+        {/if}
+
+        {#if speciesLinks.length > 0}
+          {#if hasItemsAboveLinks}
+            <li role="separator" class="my-1 h-px bg-[var(--color-base-300)]"></li>
+          {/if}
+          {#each speciesLinks as link (link.id)}
+            {@const Icon = getSpeciesLinkIcon(link.id)}
+            <li>
+              <a
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                onclick={() => handleAction(undefined)}
+                class={cn(
+                  'block text-sm w-full text-left px-3 py-2 rounded-md transition-colors',
+                  itemHoverClass
+                )}
+                role="menuitem"
+              >
+                <div class="flex items-center gap-2">
+                  <Icon class="size-4" aria-hidden="true" />
+                  <span>{t('species.externalLinks.viewOn', { site: link.label })}</span>
+                  <ExternalLink class="ml-auto size-3.5 opacity-60" aria-hidden="true" />
+                  <span class="sr-only">{t('common.aria.opensInNewTab')}</span>
+                </div>
+              </a>
+            </li>
+          {/each}
         {/if}
 
         {#if canEdit && !detection.locked && onDelete}

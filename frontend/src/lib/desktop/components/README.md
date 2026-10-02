@@ -25,7 +25,7 @@ This folder contains **shared components** used across the application. Feature-
 - `ConfidenceCircle.svelte` - Circular confidence indicator with progress ring
 - `DataTable.svelte` - Generic data table with controlled (parent-driven) sorting
 - `SortableDataTable.svelte` - Card-wrapped table with built-in client-side sorting and search, header bar (icon/title/count/search/actions), and loading/empty/no-results states; composes SortableHeader, ResizableContainer, and EmptyState
-- `SpeciesExternalLinks.svelte` - Links to a species' eBird account (only for a real eBird code) and Wikipedia article (in the UI language, by scientific name); renders nothing when neither link can be built
+- `SpeciesExternalLinks.svelte` - Links to a species' eBird account (only for a real eBird code) and Wikipedia article (in the UI language, by scientific name); renders nothing when neither link can be built. `variant="pills"` (default) shows labelled pills for detail views; `variant="icons"` shows compact icon-only links for dense rows (used by the dashboard Daily Activity card). `ActionMenu` offers the same links with `showSpeciesLinks`
   ```svelte
   <SpeciesExternalLinks
     scientificName={detection.scientificName}

@@ -1,5 +1,9 @@
 import { describe, it, expect } from 'vitest';
-import { getEBirdSpeciesUrl, getWikipediaSpeciesUrl } from './speciesLinks';
+import {
+  getEBirdSpeciesUrl,
+  getSpeciesExternalLinks,
+  getWikipediaSpeciesUrl,
+} from './speciesLinks';
 
 describe('getEBirdSpeciesUrl', () => {
   it('builds the species account URL for a real eBird code', () => {
@@ -63,5 +67,31 @@ describe('getWikipediaSpeciesUrl', () => {
     expect(getWikipediaSpeciesUrl(undefined)).toBeNull();
     expect(getWikipediaSpeciesUrl(null)).toBeNull();
     expect(getWikipediaSpeciesUrl('  ')).toBeNull();
+  });
+});
+
+describe('getSpeciesExternalLinks', () => {
+  it('returns eBird then Wikipedia links when both can be built', () => {
+    expect(getSpeciesExternalLinks('Turdus merula', 'eurbla', 'de')).toEqual([
+      { id: 'ebird', label: 'eBird', href: 'https://ebird.org/species/eurbla' },
+      {
+        id: 'wikipedia',
+        label: 'Wikipedia',
+        href: 'https://de.wikipedia.org/wiki/Special:Search?search=Turdus+merula&go=Go',
+      },
+    ]);
+  });
+
+  it('returns only the Wikipedia link without a real eBird code', () => {
+    expect(getSpeciesExternalLinks('Yoyetta celis', '').map(link => link.id)).toEqual([
+      'wikipedia',
+    ]);
+    expect(getSpeciesExternalLinks('Yoyetta celis', 'YC3f9a2b').map(link => link.id)).toEqual([
+      'wikipedia',
+    ]);
+  });
+
+  it('returns no links when neither can be built', () => {
+    expect(getSpeciesExternalLinks('', null)).toEqual([]);
   });
 });

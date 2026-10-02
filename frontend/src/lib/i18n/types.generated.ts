@@ -838,6 +838,8 @@ export type TranslationKey =
   | 'detections.errors.noIdProvided'
   | 'detections.errors.fetchFailed'
   | 'species.externalLinks.groupLabel' // params: species
+  | 'species.externalLinks.viewOn' // params: site
+  | 'species.externalLinks.viewSpeciesOn' // params: species, site
   | 'species.rarity.title'
   | 'species.rarity.score'
   | 'species.rarity.basedOnLocation' // params: latitude, longitude
@@ -4426,6 +4428,8 @@ export type TranslationParams = {
   'detections.aria.thumbnailLoaded': { species: string | number };
   'detections.errors.loadFailed': { status: string | number };
   'species.externalLinks.groupLabel': { species: string | number };
+  'species.externalLinks.viewOn': { site: string | number };
+  'species.externalLinks.viewSpeciesOn': { species: string | number; site: string | number };
   'species.rarity.basedOnLocation': { latitude: string | number; longitude: string | number };
   'spectrogram.gain.level': { value: string | number };
   'system.systemInfo.temperatureValue': { temp: string | number };

@@ -1058,7 +1058,9 @@
   },
   "species": {
     "externalLinks": {
-      "groupLabel": "Meer over {species}"
+      "groupLabel": "Meer over {species}",
+      "viewOn": "Bekijken op {site}",
+      "viewSpeciesOn": "{species} bekijken op {site}"
     },
     "rarity": {
       "title": "Soort zeldzaamheid",

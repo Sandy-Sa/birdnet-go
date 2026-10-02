@@ -320,6 +320,7 @@
       {onToggleLock}
       {onDelete}
       onDownload={detection.clipName ? () => downloadDetectionAudio(detection) : undefined}
+      showSpeciesLinks
       onMenuOpen={handleMenuOpen}
       onMenuClose={handleMenuClose}
     />

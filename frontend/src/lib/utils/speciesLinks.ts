@@ -3,6 +3,10 @@ import type { Locale } from '$lib/i18n/config';
 /** Base URL of an eBird species account page; the species code is appended. */
 const EBIRD_SPECIES_BASE_URL = 'https://ebird.org/species/';
 
+/** Site names shown as link text; brand names, so they are not translated. */
+const EBIRD_LINK_LABEL = 'eBird';
+const WIKIPEDIA_LINK_LABEL = 'Wikipedia';
+
 /** Wikipedia edition used when no UI locale is given. */
 const DEFAULT_WIKIPEDIA_LANGUAGE = 'en';
 
@@ -52,4 +56,33 @@ export function getWikipediaSpeciesUrl(
     : DEFAULT_WIKIPEDIA_LANGUAGE;
   const params = new URLSearchParams({ search: name, go: 'Go' });
   return `https://${language}.wikipedia.org/wiki/Special:Search?${params.toString()}`;
+}
+
+/** Identifies which external site a species link points to. */
+export type SpeciesExternalLinkId = 'ebird' | 'wikipedia';
+
+/** An external reference page for a species. */
+export interface SpeciesExternalLink {
+  id: SpeciesExternalLinkId;
+  /** Site name shown to the user; a brand name, so it is not translated. */
+  label: string;
+  href: string;
+}
+
+/**
+ * Returns the external reference links that can be built for a species, in
+ * display order (eBird, then Wikipedia). Empty when neither can be built.
+ */
+export function getSpeciesExternalLinks(
+  scientificName: string | null | undefined,
+  speciesCode: string | null | undefined,
+  locale?: Locale
+): SpeciesExternalLink[] {
+  const links: SpeciesExternalLink[] = [];
+  const eBirdUrl = getEBirdSpeciesUrl(speciesCode);
+  if (eBirdUrl) links.push({ id: 'ebird', label: EBIRD_LINK_LABEL, href: eBirdUrl });
+  const wikipediaUrl = getWikipediaSpeciesUrl(scientificName, locale);
+  if (wikipediaUrl)
+    links.push({ id: 'wikipedia', label: WIKIPEDIA_LINK_LABEL, href: wikipediaUrl });
+  return links;
 }

@@ -3,6 +3,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
 import ActionMenu from './ActionMenu.svelte';
 import type { Detection } from '$lib/types/detection.types';
+import { auth } from '$lib/stores/auth';
 
 // Create a mock detection for testing
 function createMockDetection(overrides: Partial<Detection> = {}): Detection {
@@ -484,5 +485,80 @@ describe('ActionMenu', () => {
     await fireEvent.click(screen.getByRole('button', { name: /actions menu/i }));
     const incorrectItem = screen.getByRole('menuitem', { name: /^incorrect/i });
     expect(incorrectItem.textContent).toContain('✗');
+  });
+
+  describe('species links', () => {
+    afterEach(() => {
+      auth.setSecurity(false, true);
+    });
+
+    it('does not render species links unless showSpeciesLinks is set', async () => {
+      render(ActionMenu, { props: { detection: createMockDetection() } });
+      await fireEvent.click(screen.getByRole('button', { name: /actions menu/i }));
+      expect(screen.queryByRole('menuitem', { name: /eBird/ })).not.toBeInTheDocument();
+      expect(screen.queryByRole('menuitem', { name: /Wikipedia/ })).not.toBeInTheDocument();
+    });
+
+    it('renders eBird and Wikipedia links that open in a new tab', async () => {
+      render(ActionMenu, {
+        props: { detection: createMockDetection(), showSpeciesLinks: true, onReview: vi.fn() },
+      });
+      await fireEvent.click(screen.getByRole('button', { name: /actions menu/i }));
+
+      const eBird = screen.getByRole('menuitem', { name: /eBird/ });
+      expect(eBird).toHaveAttribute('href', 'https://ebird.org/species/amerob');
+      expect(eBird).toHaveAttribute('target', '_blank');
+      expect(eBird).toHaveAttribute('rel', 'noopener noreferrer');
+      expect(screen.getByRole('menuitem', { name: /Wikipedia/ })).toHaveAttribute(
+        'href',
+        'https://en.wikipedia.org/wiki/Special:Search?search=Turdus+migratorius&go=Go'
+      );
+    });
+
+    it('omits the eBird link for a placeholder species code', async () => {
+      render(ActionMenu, {
+        props: {
+          detection: createMockDetection({ speciesCode: 'TM3f9a2b' }),
+          showSpeciesLinks: true,
+        },
+      });
+      await fireEvent.click(screen.getByRole('button', { name: /actions menu/i }));
+      expect(screen.queryByRole('menuitem', { name: /eBird/ })).not.toBeInTheDocument();
+      expect(screen.getByRole('menuitem', { name: /Wikipedia/ })).toBeInTheDocument();
+    });
+
+    it('closes the menu when a species link is followed', async () => {
+      render(ActionMenu, { props: { detection: createMockDetection(), showSpeciesLinks: true } });
+      await fireEvent.click(screen.getByRole('button', { name: /actions menu/i }));
+      await fireEvent.click(screen.getByRole('menuitem', { name: /Wikipedia/ }));
+      await waitFor(() => {
+        expect(screen.queryByRole('menu')).not.toBeInTheDocument();
+      });
+    });
+
+    it('keeps the menu for read-only visitors so they can reach the links', async () => {
+      auth.setSecurity(true, false);
+      render(ActionMenu, {
+        props: {
+          detection: createMockDetection(),
+          showSpeciesLinks: true,
+          onReview: vi.fn(),
+          onDelete: vi.fn(),
+        },
+      });
+      await fireEvent.click(screen.getByRole('button', { name: /actions menu/i }));
+
+      expect(screen.getByRole('menuitem', { name: /eBird/ })).toBeInTheDocument();
+      expect(screen.queryByRole('menuitem', { name: /review/i })).not.toBeInTheDocument();
+      expect(screen.queryByRole('menuitem', { name: /delete/i })).not.toBeInTheDocument();
+      // Links are the only items, so no separator leads the menu.
+      expect(screen.queryByRole('separator')).not.toBeInTheDocument();
+    });
+
+    it('renders no menu for read-only visitors when there is nothing to offer', () => {
+      auth.setSecurity(true, false);
+      render(ActionMenu, { props: { detection: createMockDetection() } });
+      expect(screen.queryByRole('button', { name: /actions menu/i })).not.toBeInTheDocument();
+    });
   });
 });

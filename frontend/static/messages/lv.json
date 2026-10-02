@@ -1058,7 +1058,9 @@
   },
   "species": {
     "externalLinks": {
-      "groupLabel": "Uzzināt vairāk: {species}"
+      "groupLabel": "Uzzināt vairāk: {species}",
+      "viewOn": "Skatīt vietnē {site}",
+      "viewSpeciesOn": "Skatīt {species} vietnē {site}"
     },
     "rarity": {
       "title": "Sugas retums",

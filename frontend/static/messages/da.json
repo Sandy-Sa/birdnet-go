@@ -1058,7 +1058,9 @@
   },
   "species": {
     "externalLinks": {
-      "groupLabel": "Læs mere om {species}"
+      "groupLabel": "Læs mere om {species}",
+      "viewOn": "Vis på {site}",
+      "viewSpeciesOn": "Vis {species} på {site}"
     },
     "rarity": {
       "title": "Artens sjældenhed",

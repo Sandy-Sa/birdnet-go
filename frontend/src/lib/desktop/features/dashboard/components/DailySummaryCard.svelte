@@ -82,6 +82,7 @@ Responsive Breakpoints:
   import { untrack } from 'svelte';
   import AnimatedCounter from './AnimatedCounter.svelte';
   import BirdThumbnailPopup from './BirdThumbnailPopup.svelte';
+  import SpeciesExternalLinks from '$lib/desktop/components/data/SpeciesExternalLinks.svelte';
   import SunTimeTooltip from './SunTimeTooltip.svelte';
 
   const logger = loggers.ui;
@@ -1134,6 +1135,13 @@ Responsive Breakpoints:
                       </span>
                     {/if}
                   </a>
+                  <SpeciesExternalLinks
+                    scientificName={item.scientific_name}
+                    speciesCode={item.species_code}
+                    {displayName}
+                    variant="icons"
+                    className="species-external-links shrink-0 ml-auto"
+                  />
                 </div>
 
                 <!-- Hourly heatmap cells (desktop) -->
@@ -1265,6 +1273,10 @@ Responsive Breakpoints:
     --species-col-min-width: 9rem; /* Fallback, matches CONFIG.SPECIES_COLUMN.MIN_WIDTH */
     --species-col-max-width: 16rem; /* Fallback, matches CONFIG.SPECIES_COLUMN.MAX_WIDTH */
 
+    /* Room for the always-visible eBird/Wikipedia icons on touch devices: two
+       1.5rem icons, their 0.125rem gap and the 0.5rem gap before them */
+    --species-links-width: 3.625rem;
+
     /* Light theme heatmap colors */
     --heatmap-color-0: #f0f9fc;
     --heatmap-color-1: #e0f3f8;
@@ -1333,6 +1345,32 @@ Responsive Breakpoints:
 
   .species-row:hover {
     background-color: var(--hover-overlay);
+  }
+
+  /* eBird/Wikipedia links: on devices with a mouse they appear only while the
+     row is hovered or holds keyboard focus (the name link is focusable, so
+     tabbing onto it reveals them). Touch devices cannot hover, so they keep the
+     links visible. */
+  /* Touch devices show the links on every row, so widen the species column
+     (header and spacer cells share the class, keeping the grid aligned) rather
+     than truncating every name. */
+  @media (hover: none) {
+    .species-label-col {
+      width: calc(
+        var(--species-col-width, var(--species-col-min-width)) + var(--species-links-width)
+      );
+    }
+  }
+
+  @media (hover: hover) {
+    .species-row :global(.species-external-links) {
+      display: none;
+    }
+
+    .species-row:hover :global(.species-external-links),
+    .species-row:focus-within :global(.species-external-links) {
+      display: flex;
+    }
   }
 
   /* Empty cells background */

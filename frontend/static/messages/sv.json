@@ -1058,7 +1058,9 @@
   },
   "species": {
     "externalLinks": {
-      "groupLabel": "Läs mer om {species}"
+      "groupLabel": "Läs mer om {species}",
+      "viewOn": "Visa på {site}",
+      "viewSpeciesOn": "Visa {species} på {site}"
     },
     "rarity": {
       "title": "Arternas sällsynthet",

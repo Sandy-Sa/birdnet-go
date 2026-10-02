@@ -1058,7 +1058,9 @@
   },
   "species": {
     "externalLinks": {
-      "groupLabel": "Más información sobre {species}"
+      "groupLabel": "Más información sobre {species}",
+      "viewOn": "Ver en {site}",
+      "viewSpeciesOn": "Ver {species} en {site}"
     },
     "rarity": {
       "title": "Rareza de la especie",

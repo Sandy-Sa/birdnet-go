@@ -205,6 +205,9 @@ const translations: Record<string, string> = {
   'dashboard.recentDetections.actions.lockDetection': 'Lock detection',
   'dashboard.recentDetections.actions.unlockDetection': 'Unlock detection',
   'dashboard.recentDetections.actions.deleteDetection': 'Delete detection',
+  // Species external link translations
+  'species.externalLinks.viewOn': 'View on {site}',
+  'species.externalLinks.viewSpeciesOn': 'View {species} on {site}',
   // Audio Settings translations
   'settings.audio.audioCapture.title': 'Audio Capture',
   'settings.audio.audioCapture.description': 'Configure audio capture settings',

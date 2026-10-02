@@ -83,4 +83,49 @@ describe('SpeciesExternalLinks', () => {
 
     expect(screen.queryByRole('list')).not.toBeInTheDocument();
   });
+
+  describe('icons variant', () => {
+    it('renders icon-only links named after the species and site', () => {
+      renderTyped(SpeciesExternalLinks, { props: { ...baseProps, variant: 'icons' } });
+
+      const eBird = screen.getByRole('link', { name: /View Sacred Kingfisher on eBird/ });
+      expect(eBird).toHaveAttribute('href', 'https://ebird.org/species/sackin1');
+      expect(eBird).toHaveAttribute('target', '_blank');
+      expect(eBird).toHaveAttribute('rel', 'noopener noreferrer');
+      expect(eBird).toHaveAttribute('title', 'View Sacred Kingfisher on eBird');
+      expect(eBird).toHaveAccessibleName(
+        'View Sacred Kingfisher on eBird common.aria.opensInNewTab'
+      );
+
+      expect(
+        screen.getByRole('link', { name: /View Sacred Kingfisher on Wikipedia/ })
+      ).toHaveAttribute(
+        'href',
+        'https://en.wikipedia.org/wiki/Special:Search?search=Todiramphus+sanctus&go=Go'
+      );
+    });
+
+    it('omits the eBird icon when the species has no eBird code', () => {
+      renderTyped(SpeciesExternalLinks, {
+        props: { ...baseProps, speciesCode: '', variant: 'icons' },
+      });
+
+      expect(screen.getAllByRole('link')).toHaveLength(1);
+      // The icon-only name and title prove the icons variant rendered, not the pills.
+      expect(
+        screen.getByRole('link', { name: /View Sacred Kingfisher on Wikipedia/ })
+      ).toHaveAttribute('title', 'View Sacred Kingfisher on Wikipedia');
+    });
+
+    it('shows icons instead of site names as the visible link content', () => {
+      renderTyped(SpeciesExternalLinks, { props: { ...baseProps, variant: 'icons' } });
+
+      for (const link of screen.getAllByRole('link')) {
+        expect(link.querySelector('svg')).not.toBeNull();
+        // All of the link's text is screen-reader-only; nothing visible is text.
+        const srText = link.querySelector('.sr-only')?.textContent ?? '';
+        expect(link.textContent.replace(srText, '').trim()).toBe('');
+      }
+    });
+  });
 });

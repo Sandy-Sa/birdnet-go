@@ -1058,7 +1058,9 @@
   },
   "species": {
     "externalLinks": {
-      "groupLabel": "Lisätietoja lajista {species}"
+      "groupLabel": "Lisätietoja lajista {species}",
+      "viewOn": "Näytä palvelussa {site}",
+      "viewSpeciesOn": "Näytä laji {species} palvelussa {site}"
     },
     "rarity": {
       "title": "Lajin harvinaisuus",

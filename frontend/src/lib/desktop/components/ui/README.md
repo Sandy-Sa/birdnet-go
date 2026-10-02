@@ -496,6 +496,7 @@ interface Props {
   onToggleLock?: () => void;
   onDelete?: () => void;
   onDownload?: () => void;
+  showSpeciesLinks?: boolean;
   className?: string;
   onMenuOpen?: () => void;
   onMenuClose?: () => void;
@@ -507,6 +508,7 @@ interface Props {
 - Quick-review shortcuts (Correct / Incorrect) at the top, hidden when the detection is locked
 - Review, Ignore/Show species, Lock/Unlock, Delete actions (existing)
 - Optional Download item when `onDownload` is provided
+- Optional "View on eBird" / "View on Wikipedia" links (new tab) when `showSpeciesLinks` is set; eBird only for a real eBird species code, Wikipedia in the UI language. The links need no edit rights, so the menu also renders for read-only visitors when they are present
 - Viewport-aware positioning (flips above the trigger when there is not enough space below)
 - `variant="overlay"` swaps to a dark palette suitable for spectrogram overlays
 - Auth-gated: write actions hidden when the user cannot edit
