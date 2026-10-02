@@ -18,6 +18,7 @@ vi.mock('$lib/i18n', () => ({
     // eslint-disable-next-line security/detect-object-injection -- Test mock with controlled translation data
     return translations[key] ?? key;
   }),
+  getLocale: vi.fn(() => 'en'),
 }));
 
 describe('SpeciesDetailModal', () => {
@@ -112,6 +113,24 @@ describe('SpeciesDetailModal', () => {
     const img = container.querySelector('img');
     expect(img).not.toBeNull();
     expect(img).toHaveAttribute('src', '/api/v2/media/image/Passer%20domesticus');
+  });
+
+  it('links to the species on eBird and Wikipedia', () => {
+    modalTest.render({
+      props: {
+        isOpen: true,
+        species: { ...mockSpecies, species_code: 'houspa' },
+      },
+    });
+
+    expect(screen.getByRole('link', { name: /eBird/ })).toHaveAttribute(
+      'href',
+      'https://ebird.org/species/houspa'
+    );
+    expect(screen.getByRole('link', { name: /Wikipedia/ })).toHaveAttribute(
+      'href',
+      'https://en.wikipedia.org/wiki/Special:Search?search=Passer+domesticus&go=Go'
+    );
   });
 
   // Under defer-to-proxy every species gets a media-proxy URL that can 404, so the

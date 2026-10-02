@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { waitFor, cleanup } from '@testing-library/svelte';
+import { waitFor, cleanup, screen } from '@testing-library/svelte';
 import { createComponentTestFactory } from '../../../test/render-helpers';
 import DetectionDetail from './DetectionDetail.svelte';
 import type { Detection } from '$lib/types/detection.types';
@@ -246,5 +246,43 @@ describe('DetectionDetail rarity location coordinates', () => {
     const section = raritySection(container);
     expect(section?.querySelector('.rarity-label')).not.toBeNull();
     expect(section?.querySelectorAll('p')).toHaveLength(0);
+  });
+});
+
+describe('DetectionDetail species external links', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  afterEach(() => {
+    cleanup();
+    vi.unstubAllGlobals();
+  });
+
+  it('links the species hero to eBird and Wikipedia', async () => {
+    const detection = makeDetection({
+      id: 25837,
+      speciesCode: 'sackin1',
+      scientificName: 'Todiramphus sanctus',
+      commonName: 'Sacred Kingfisher',
+    });
+    vi.stubGlobal(
+      'fetch',
+      vi.fn((input: RequestInfo | URL) => {
+        if (String(input).includes('/api/v2/detections/25837')) {
+          return Promise.resolve(jsonResponse(detection));
+        }
+        return Promise.resolve(jsonResponse({}));
+      })
+    );
+
+    detailTest.render({ detectionId: '25837' });
+
+    const eBird = await screen.findByRole('link', { name: /eBird/ });
+    expect(eBird).toHaveAttribute('href', 'https://ebird.org/species/sackin1');
+    expect(screen.getByRole('link', { name: /Wikipedia/ })).toHaveAttribute(
+      'href',
+      'https://en.wikipedia.org/wiki/Special:Search?search=Todiramphus+sanctus&go=Go'
+    );
   });
 });

@@ -141,7 +141,8 @@
       "visitEbirdLink": "Atvērt eBird.org jaunā cilnē",
       "learnEbirdTaxonomyLink": "Atvērt eBird taksonomiju jaunā cilnē",
       "resizeHandle": "Velciet, lai mainītu izmēru",
-      "imageCredit": "Attēla autors: {name}"
+      "imageCredit": "Attēla autors: {name}",
+      "opensInNewTab": "(atveras jaunā cilnē)"
     },
     "labels": {
       "confidence": "Ticamība",
@@ -1056,6 +1057,9 @@
     }
   },
   "species": {
+    "externalLinks": {
+      "groupLabel": "Uzzināt vairāk: {species}"
+    },
     "rarity": {
       "title": "Sugas retums",
       "score": "Vērtējums",

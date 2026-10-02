@@ -10,12 +10,14 @@
   - Tabbed content: overview, taxonomy, history, notes, review
   - Weather and environmental context
   - Species rarity and taxonomy information
+  - Links to the species on eBird and Wikipedia
 
   Props:
   - detectionId: string - The ID of the detection to display
 -->
 <script lang="ts">
   import ConfidenceCircle from '$lib/desktop/components/data/ConfidenceCircle.svelte';
+  import SpeciesExternalLinks from '$lib/desktop/components/data/SpeciesExternalLinks.svelte';
   import WeatherDetails from '$lib/desktop/components/data/WeatherDetails.svelte';
   import AudioPlayer from '$lib/desktop/components/media/AudioPlayer.svelte';
   import VerificationBadges from '$lib/desktop/components/ui/VerificationBadges.svelte';
@@ -557,6 +559,12 @@
               >{t('detections.detail.aria.scientificName')}:
             </span>{det.scientificName}
           </p>
+          <SpeciesExternalLinks
+            scientificName={det.scientificName}
+            speciesCode={det.speciesCode}
+            {displayName}
+            className="mt-2"
+          />
           <div class="mt-3" aria-label={t('detections.detail.aria.classificationBadges')}>
             <VerificationBadges detection={det} size="sm" />
           </div>

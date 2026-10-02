@@ -141,7 +141,8 @@
       "visitEbirdLink": "eBird.org megnyitása új lapon",
       "learnEbirdTaxonomyLink": "eBird taxonómia megnyitása új lapon",
       "resizeHandle": "Húzza az átméretezéshez",
-      "imageCredit": "Kép forrása: {name}"
+      "imageCredit": "Kép forrása: {name}",
+      "opensInNewTab": "(új lapon nyílik meg)"
     },
     "labels": {
       "confidence": "Megbízhatóság",
@@ -1056,6 +1057,9 @@
     }
   },
   "species": {
+    "externalLinks": {
+      "groupLabel": "További információ: {species}"
+    },
     "rarity": {
       "title": "Faj ritkasága",
       "score": "Pontszám",

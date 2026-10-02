@@ -44,6 +44,7 @@
   interface SpeciesData {
     common_name: string;
     scientific_name: string;
+    species_code?: string;
     count: number;
     avg_confidence: number;
     max_confidence: number;

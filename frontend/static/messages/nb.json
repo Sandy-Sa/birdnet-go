@@ -141,7 +141,8 @@
       "visitEbirdLink": "Åpne eBird.org i ny fane",
       "learnEbirdTaxonomyLink": "Åpne eBird-taksonomi i ny fane",
       "resizeHandle": "Dra for å endre størrelse",
-      "imageCredit": "Bildekreditt: {name}"
+      "imageCredit": "Bildekreditt: {name}",
+      "opensInNewTab": "(åpnes i ny fane)"
     },
     "labels": {
       "confidence": "Sikkerhet",
@@ -1056,6 +1057,9 @@
     }
   },
   "species": {
+    "externalLinks": {
+      "groupLabel": "Les mer om {species}"
+    },
     "rarity": {
       "title": "Sjeldenhetsgrad",
       "score": "Poeng",

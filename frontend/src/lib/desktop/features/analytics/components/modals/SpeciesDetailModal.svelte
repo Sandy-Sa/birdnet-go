@@ -1,6 +1,7 @@
 <script lang="ts">
   import { untrack } from 'svelte';
   import Modal from '$lib/desktop/components/ui/Modal.svelte';
+  import SpeciesExternalLinks from '$lib/desktop/components/data/SpeciesExternalLinks.svelte';
   import { t } from '$lib/i18n';
   import { formatDate } from '$lib/utils/formatters';
   import { localizeSpeciesName } from '$lib/utils/speciesDisplay';
@@ -9,6 +10,7 @@
   interface SpeciesData {
     common_name: string;
     scientific_name: string;
+    species_code?: string;
     count: number;
     avg_confidence: number;
     max_confidence: number;
@@ -80,6 +82,12 @@
           <p class="text-sm text-[var(--color-base-content)] opacity-70 italic truncate">
             {displaySpecies.scientific_name}
           </p>
+          <SpeciesExternalLinks
+            scientificName={displaySpecies.scientific_name}
+            speciesCode={displaySpecies.species_code}
+            {displayName}
+            className="mt-2"
+          />
         </div>
       </div>
     {/if}

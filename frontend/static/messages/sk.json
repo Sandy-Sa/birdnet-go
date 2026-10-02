@@ -141,7 +141,8 @@
       "visitEbirdLink": "Otvoriť eBird.org v novej karte",
       "learnEbirdTaxonomyLink": "Otvoriť taxonómiu eBird v novej karte",
       "resizeHandle": "Potiahnutím zmeníte veľkosť",
-      "imageCredit": "Autor obrázka: {name}"
+      "imageCredit": "Autor obrázka: {name}",
+      "opensInNewTab": "(otvorí sa v novej karte)"
     },
     "labels": {
       "confidence": "Istota",
@@ -1056,6 +1057,9 @@
     }
   },
   "species": {
+    "externalLinks": {
+      "groupLabel": "Viac o druhu {species}"
+    },
     "rarity": {
       "title": "Vzácnosť druhu",
       "score": "Skóre",

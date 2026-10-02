@@ -141,7 +141,8 @@
       "visitEbirdLink": "Öppna eBird.org i en ny flik",
       "learnEbirdTaxonomyLink": "Öppna eBird Taxonomy i en ny flik",
       "resizeHandle": "Dra för att ändra storlek",
-      "imageCredit": "Bildrättigheter: {name}"
+      "imageCredit": "Bildrättigheter: {name}",
+      "opensInNewTab": "(öppnas i en ny flik)"
     },
     "labels": {
       "confidence": "Konfidens",
@@ -1056,6 +1057,9 @@
     }
   },
   "species": {
+    "externalLinks": {
+      "groupLabel": "Läs mer om {species}"
+    },
     "rarity": {
       "title": "Arternas sällsynthet",
       "score": "Poäng",

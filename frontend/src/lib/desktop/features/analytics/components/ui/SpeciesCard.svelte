@@ -1,4 +1,5 @@
 <script lang="ts">
+  import SpeciesExternalLinks from '$lib/desktop/components/data/SpeciesExternalLinks.svelte';
   import { cn } from '$lib/utils/cn';
   import { t } from '$lib/i18n';
   import { formatDate } from '$lib/utils/formatters';
@@ -8,6 +9,7 @@
   interface SpeciesData {
     common_name: string;
     scientific_name: string;
+    species_code?: string;
     count: number;
     avg_confidence: number;
     max_confidence: number;
@@ -48,6 +50,12 @@
     <p class="text-sm text-[var(--color-base-content)] opacity-60 italic">
       {species.scientific_name}
     </p>
+    <SpeciesExternalLinks
+      scientificName={species.scientific_name}
+      speciesCode={species.species_code}
+      {displayName}
+      className="mt-1"
+    />
     <div class="text-sm space-y-1 mt-2">
       <div class="flex justify-between">
         <span class="text-[var(--color-base-content)] opacity-60"

@@ -141,7 +141,8 @@
       "visitEbirdLink": "Open eBird.org in een nieuwe tab",
       "learnEbirdTaxonomyLink": "Open eBird Taxonomy in een nieuwe tab",
       "resizeHandle": "Sleep om te vergroten/verkleinen",
-      "imageCredit": "Foto door: {name}"
+      "imageCredit": "Foto door: {name}",
+      "opensInNewTab": "(opent in een nieuwe tab)"
     },
     "labels": {
       "confidence": "Betrouwbaarheid",
@@ -1056,6 +1057,9 @@
     }
   },
   "species": {
+    "externalLinks": {
+      "groupLabel": "Meer over {species}"
+    },
     "rarity": {
       "title": "Soort zeldzaamheid",
       "score": "Score",

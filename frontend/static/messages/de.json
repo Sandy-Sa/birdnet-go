@@ -141,7 +141,8 @@
       "visitEbirdLink": "eBird.org in neuem Tab öffnen",
       "learnEbirdTaxonomyLink": "eBird-Taxonomie in neuem Tab öffnen",
       "resizeHandle": "Ziehen zum Ändern der Größe",
-      "imageCredit": "Bildnachweis: {name}"
+      "imageCredit": "Bildnachweis: {name}",
+      "opensInNewTab": "(öffnet in neuem Tab)"
     },
     "labels": {
       "confidence": "Konfidenz",
@@ -1056,6 +1057,9 @@
     }
   },
   "species": {
+    "externalLinks": {
+      "groupLabel": "Mehr über {species} erfahren"
+    },
     "rarity": {
       "title": "Seltenheit der Art",
       "score": "Bewertung",

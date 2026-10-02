@@ -139,6 +139,7 @@ export type TranslationKey =
   | 'common.aria.learnEbirdTaxonomyLink'
   | 'common.aria.resizeHandle'
   | 'common.aria.imageCredit' // params: name
+  | 'common.aria.opensInNewTab'
   | 'common.labels.confidence'
   | 'common.labels.github'
   | 'common.values.yes'
@@ -836,6 +837,7 @@ export type TranslationKey =
   | 'detections.errors.loadFailed' // params: status
   | 'detections.errors.noIdProvided'
   | 'detections.errors.fetchFailed'
+  | 'species.externalLinks.groupLabel' // params: species
   | 'species.rarity.title'
   | 'species.rarity.score'
   | 'species.rarity.basedOnLocation' // params: latitude, longitude
@@ -4423,6 +4425,7 @@ export type TranslationParams = {
   'detections.aria.thumbnailLoading': { species: string | number };
   'detections.aria.thumbnailLoaded': { species: string | number };
   'detections.errors.loadFailed': { status: string | number };
+  'species.externalLinks.groupLabel': { species: string | number };
   'species.rarity.basedOnLocation': { latitude: string | number; longitude: string | number };
   'spectrogram.gain.level': { value: string | number };
   'system.systemInfo.temperatureValue': { temp: string | number };

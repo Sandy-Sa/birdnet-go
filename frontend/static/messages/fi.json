@@ -141,7 +141,8 @@
       "visitEbirdLink": "Avaa eBird.org uuteen välilehteen",
       "learnEbirdTaxonomyLink": "Avaa eBird-taksonomia uuteen välilehteen",
       "resizeHandle": "Vedä muuttaaksesi kokoa",
-      "imageCredit": "Kuvan luotto: {name}"
+      "imageCredit": "Kuvan luotto: {name}",
+      "opensInNewTab": "(avautuu uuteen välilehteen)"
     },
     "labels": {
       "confidence": "Luottamus",
@@ -1056,6 +1057,9 @@
     }
   },
   "species": {
+    "externalLinks": {
+      "groupLabel": "Lisätietoja lajista {species}"
+    },
     "rarity": {
       "title": "Lajin harvinaisuus",
       "score": "Pisteet",
